@@ -5,6 +5,6 @@ sklearn
 scikit-learn
 matplotlib
 seaborn
-plotly.express
+plotly
 itertools
-plotly.graph_objects
+plotly
