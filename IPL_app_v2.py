@@ -161,7 +161,7 @@ def load_venue_analysis(selected_venue):
 
         with col2:
             try:
-                most_wickets_by_player_at_venue.to_frame  = wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()      
+                most_wickets_by_player_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()      
                 most_wickets_by_player_at_venue = most_wickets_by_player_at_venue.rename({'bowler':'Bowler'}, axis =1)
                 st.subheader('Top 5 Wicket Takers')
                 st.write(most_wickets_by_player_at_venue .to_html(index=False), unsafe_allow_html=True)
@@ -177,7 +177,7 @@ def load_venue_analysis(selected_venue):
         col1 ,col2, col3 = st.columns(3)
 
         with col1:
-            most_wins_by_team_at_venue =match[match['city'].str.contains(selected_venue)].groupby('winner')['id'].count().sort_values(ascending=False)
+            most_wins_by_team_at_venue =match[match['city'].str.contains(selected_venue)].groupby('winner')['id'].count().sort_values(ascending=False).to_frame(name='Wins').reset_index()
             st.subheader('Team Win %')
             fig101= go.Figure(data = [go.Pie(values=most_wins_by_team_at_venue.values, labels=most_wins_by_team_at_venue.index,textinfo='label+percent',insidetextorientation='radial', hole = .3)])
             fig101.update_layout(showlegend=False)
@@ -185,12 +185,12 @@ def load_venue_analysis(selected_venue):
 
         with col2:
             st.subheader('Top 5 Wicket Takers')
-            most_wicket_takers_at_venue  = wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5)
+            most_wicket_takers_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()
             most_wicket_takers_at_venue = most_wicket_takers_at_venue.rename({'bowler':'Bowler'}, axis =1)
             st.bar_chart(most_wicket_takers_at_venue)
 
         with col3:
-            most_motm_at_venue = motm[motm['city'].str.contains(selected_venue)].groupby('motm_team')['id'].count().sort_values(ascending = False).head(5)
+            most_motm_at_venue = motm[motm['city'].str.contains(selected_venue)].groupby('motm_team')['id'].count().sort_values(ascending = False).head(5).to_frame(name='MVP Awards Team').reset_index()
             st.subheader('Top 5 MVPs')
             st.bar_chart(most_motm_at_venue)
 
