@@ -185,7 +185,7 @@ def load_venue_analysis(selected_venue):
 
         with col2:
             st.subheader('Top 5 Wicket Takers')
-            most_wicket_takers_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()
+            most_wicket_takers_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).reset_index()
             #most_wicket_takers_at_venue = most_wicket_takers_at_venue.rename({'bowler':'Bowler'}, axis =1)
             st.bar_chart(most_wicket_takers_at_venue)
 
