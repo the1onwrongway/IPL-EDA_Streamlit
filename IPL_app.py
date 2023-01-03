@@ -160,11 +160,13 @@ def load_venue_analysis(selected_venue):
             #to_html is used to hide the index column
 
         with col2:
-            most_wickets_by_player_at_venue  = wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()      
-            most_wickets_by_player_at_venue = most_wickets_by_player_at_venue.rename({'bowler':'Bowler'}, axis =1)
-            st.subheader('Top 5 Wicket Takers')
-            st.write(most_wickets_by_player_at_venue .to_html(index=False), unsafe_allow_html=True)
-
+            try:
+                most_wickets_by_player_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5).to_frame(name='Wickets').reset_index()      
+                most_wickets_by_player_at_venue = most_wickets_by_player_at_venue.rename({'bowler':'Bowler'}, axis =1)
+                st.subheader('Top 5 Wicket Takers')
+                st.write(most_wickets_by_player_at_venue .to_html(index=False), unsafe_allow_html=True)
+            except ValueError:
+                st.error('Broke here')
         with col3:
             most_motm_at_venue = motm[motm['city'].str.contains(selected_venue)].groupby('player_of_match')['id'].count().sort_values(ascending = False).head(5).to_frame(name='MVP Awards').reset_index()
             most_motm_at_venue = most_motm_at_venue.rename({'player_of_match':'Player'}, axis =1)
@@ -183,8 +185,8 @@ def load_venue_analysis(selected_venue):
 
         with col2:
             st.subheader('Top 5 Wicket Takers')
-            most_wicket_takers_at_venue  = wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5)
-            most_wicket_takers_at_venue = most_wicket_takers_at_venue.rename({'bowler':'Bowler'}, axis =1)
+            most_wicket_takers_at_venue= wickets_df[wickets_df['city'].str.contains(selected_venue)].groupby('bowler')['dismissal_kind'].count().sort_values(ascending = False).head(5)
+            #most_wicket_takers_at_venue = most_wicket_takers_at_venue.rename({'bowler':'Bowler'}, axis =1)
             st.bar_chart(most_wicket_takers_at_venue)
 
         with col3:
