@@ -165,7 +165,7 @@ def load_venue_analysis(selected_venue):
                 most_wickets_by_player_at_venue = most_wickets_by_player_at_venue.rename({'bowler':'Bowler'}, axis =1)
                 st.subheader('Top 5 Wicket Takers')
                 st.write(most_wickets_by_player_at_venue .to_html(index=False), unsafe_allow_html=True)
-            except IndexError:
+            except ValueError:
                 st.error('Broke here')
         with col3:
             most_motm_at_venue = motm[motm['city'].str.contains(selected_venue)].groupby('player_of_match')['id'].count().sort_values(ascending = False).head(5).to_frame(name='MVP Awards').reset_index()
